@@ -1,0 +1,68 @@
+function [changed_areas] = find_areas_with_changes(changes_image)
+f = waitbar(0,'[0%] Please wait...');
+pause(.5)
+
+waitbar(.10,f,'[10%] Counting defined areas');
+pause(.5)
+% Use count_defined_areas function to count the number of areas
+areas_count = count_defined_areas;
+
+waitbar(.20,f,'[20%] Converting image');
+% Convert changes image to double
+changes_image_double = im2double(changes_image);
+% Apply threshold to ignore minor changes in areas
+changes_image_double(changes_image_double<0.05) = 0;
+% Add R, G, B dimensions in one array
+changes_image_cat = changes_image_double(:,:,1) + changes_image_double(:,:,2) + changes_image_double(:,:,3);
+
+% Get changes_image size
+[m,n,k] = size(changes_image);
+
+% Index to count changed areas
+count = 1;
+% Initialize changed_areas matrix
+changed_areas = 0;
+waitbar(.30,f,'[30%] Searching for changes');
+for i = 1 : areas_count % Loop for all areas
+    if i==round(areas_count*0.5) waitbar(.5,f,'[50%] Searching for changes');        
+    elseif i==round(areas_count*0.7) waitbar(.7,f,'[70%] Searching for changes');     
+    elseif i==round(areas_count*0.9) waitbar(.9,f,'[90%] Searching for changes');  
+    end
+    % Read files with areas coordinations
+    if exist(strcat('areas/polygon_x_coordinates_',sprintf( '%05d', i),'.dat'), 'file') == 2
+        x_coord = csvread(strcat('areas/polygon_x_coordinates_',sprintf( '%05d', i),'.dat'));
+        y_coord = csvread(strcat('areas/polygon_y_coordinates_',sprintf( '%05d', i),'.dat'));
+
+        % Create mask for each area
+        area_mask = poly2mask(x_coord,y_coord,m,n);
+        % Convert mask to double
+        area_mask_cat = double(area_mask);
+
+        % Multiply changed image and mask pixel-by-pixel 
+        mult_matrix = changes_image_cat .* area_mask_cat;
+
+        % Check if the matrix has non zero values
+        B1 = any(mult_matrix);
+        B2 = any(B1);
+
+        % If any element of B2 is not zero, there are changes in this area
+        if B2 ~= 0
+            changed_areas(count) = i; % Save this area in changed_areas matrix
+            count = count + 1;
+        end
+
+        % Initialize variables
+        x_coord = 0; y_coord = 0; area_mask = 0; area_mask_double = 0;
+        area_mask_cat = 0; mult_matrix = 0; B1 = 0; B2 = 0;
+    else
+        %fprintf("Area %d does not exist or has been previously deleted!!!\n",i)
+    end
+    
+end
+
+[m,n] = size(changed_areas);    % get the number of changed areas
+waitbar(1,f,'[100%] Finished!');
+pause(0.5)
+close(f)
+
+end
