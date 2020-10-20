@@ -1,11 +1,12 @@
 # Detecting changed objects using image pattern matching
 
 ## 1. Introduction
-++++
-Risk assessment
+Pattern matching in computer vision refers to a set of computational techniques which enable the localization of a template pattern in a sample image or signal. Such template pattern can be a specific facial feature, an object of known characteristics or a speech pattern such as a word. Many of the challenges in computer vision, signal processing and machine learning can be formulated and solved under the context of pattern matching terminology. An efficient solution to pattern search and matching should consist first in restricting search space to one in which the localization of a best match to a given pattern is not based on a direct comparison of pixel by pixel values of the pattern and sample, but rather it is made on scale-invariant features. The use of these features, e.g. Harris corners or histogram-based matching, partially resolves the scale issue and reduces the matching problem to one for which only very few key points and their descriptors need to be aligned.
+
+In many daily environments (let's take for example, a construction site), risk assessment is crucial. Many areas in a construction site are considered highly dangerous and workers should be extra careful around such areas. What is more important is that workers should be aware of which areas are hazardous and do their best to avoid any injuries around such areas. 
 
 ## 2. The idea
-This proposal allows anyone to compare any two images and find the areas in which the two images are different. Even though the user is free to select any two images he wishes, it makes sense to use similar images in order for the comparison to have a meaningful essence.
+This proposal taclkes the issue whete finding differences between two images is crucial (risk assessment included) and allows anyone to compare any two images and find the areas in which the two images are different. Even though the user is free to select any two images he wishes, it makes sense to use similar images in order for the comparison to have a meaningful essence.
 
 The image comparison is enabled by using two different techniques:
 * 1
@@ -139,11 +140,25 @@ Image 8. Complete data for risk assessment
 
 Image 9. Display the Risk schedule
 
+### 4.8. Compare images (with areas masks)
+
+### 4.9. Compare images (with image scan)
 
 ### 4.10. Display Results
 
 For any of the existing comparisons so far, both the initial image and the compared images are stored in the tool, so that the user can anytime retrieve the data of a previous comparison. After selecting the `Display Results` option from the menu and selecting the comparison image we are interested with, the following output is provided. 
 
-![This is a alt text.](https://i.ibb.co/17j1NFW/Screenshot-22.png "Image X")
+![This is a alt text.](https://i.ibb.co/17j1NFW/Screenshot-22.png "Image 12")
 
-Image X. Display existing comparison results
+Image 12. Display existing comparison results
+
+## 5. Launching the application
+
+* `main.m`: **Run this file to launch the application**. Also hanldes all menu selections.
+* `areas_selection_impl.m`: Handles the implementation that allows to define new area by creating the polygon points. 
+* `areas_selection.m`: Handles user's response to define new area after already having created an area.
+
+
+
+
+
