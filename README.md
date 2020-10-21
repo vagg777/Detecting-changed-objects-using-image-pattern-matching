@@ -9,8 +9,8 @@ In many daily environments (let's take for example, a construction site), risk a
 This proposal taclkes the issue whete finding differences between two images is crucial (risk assessment included) and allows anyone to compare any two images and find the areas in which the two images are different. Even though the user is free to select any two images he wishes, it makes sense to use similar images in order for the comparison to have a meaningful essence.
 
 The image comparison is enabled by using two different techniques:
-* 1
-* 2
+1.    Method of areas mask
+2.    Method of image scan
 
 The first choice +++
 
@@ -152,13 +152,25 @@ For any of the existing comparisons so far, both the initial image and the compa
 
 Image 12. Display existing comparison results
 
-## 5. Launching the application
+## 5. Explaining the function
 
 * `main.m`: **Run this file to launch the application**. Also hanldes all menu selections.
 * `areas_selection_impl.m`: Handles the implementation that allows to define new area by creating the polygon points. 
 * `areas_selection.m`: Handles user's response to define new area after already having created an area.
-
-
-
-
-
+* `assess_risk.m`: Handles implementation and saving data for risk assessment.
+* `assess_risk_menu.m`: Creates the menu for the risk assessment options.
+* `compare_images.m`: Returns the absolute difference between the two images using MATLAB's `imabsdiff()`.
+* `count_risk_areas.m`: Counts the risk areas and saves them in `/risks` folder.
+* `create_email_text.m`: Responsible for creating the email text and add the attachments (located in the `/output` folder).
+* `display_area_risk_table.m`: Displays the table of hazards (risk schedule, probability, severity, etc)
+* `display_areas_impl.m`: Displays all the user defined areas in the original image
+* `display_changed_areas_impl.m`: Displays all the defined areas that changed in the original image
+* `find_areas_with_changes.m`: Finds the area changes between the two images
+* `get_global_properties`: Declares all the global filepaths and variables (e.g. email account)
+* `image_compare_tool`: Creates the window that shows the two comparison images side-by-side
+* `image_zoom_tool`: Adds a smaller windows to allow zoom in and out in the comparison images
+* `include_areas_in_image`: Responsible for adding the user-defined areas in the image
+* `save_files`: Saves the initial and the comparison images in the `/images` folder.
+* `save_risks_impl`: Saves a new risk/hazard added by the user
+* `scan_images_for_changes`: Scans the two images to find the differences.
+* `send_email`: Declare the email properties, attach the respective two images from the `/output` folder and send the email.
