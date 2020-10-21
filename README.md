@@ -1,6 +1,6 @@
 # Detecting changed objects using image pattern matching
 
-# 0. Contributors
+## 0. Contributors
 * Evangelos Michos (and author of this readme file)
 * Vasileios Kokkinos
 
